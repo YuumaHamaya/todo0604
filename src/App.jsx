@@ -48,6 +48,13 @@ function App() {
 
   const sortedTodos = [...todos].sort((a, b) => order === 'asc' ? a.id - b.id : b.id - a.id)
 
+  const clearAll = () => {
+    if (window.confirm('本当に全削除しますか？')) {
+      setTodos([])
+    }
+  }
+
+
   return (
   <div>
     <h1>TODOアプリ</h1>
@@ -59,8 +66,11 @@ function App() {
       <>
         <button onClick={() => setOrder(order === 'asc' ? 'desc' : 'asc')}>並び替え ({order === 'asc' ? '古い順' : '新しい順'})</button>
         <TodoForm onAdd={addTodo} />
+        <button onClick={clearAll} style={{margin: '8px 0'}}>
+          全削除
+        </button>
         <p>全{todos.length}件/完了{todos.filter((todo) => todo.completed).length}件/未完了{todos.filter((todo) => !todo.completed).length}件</p>
-        <button onClick={() => window.confirm('本当に削除しますか？') && setTodos([])}>全て削除</button>
+          
         <TodoList todos={sortedTodos} onDelete={deleteTodo} toggleTodo={toggleTodo} />
       </>
     )}
